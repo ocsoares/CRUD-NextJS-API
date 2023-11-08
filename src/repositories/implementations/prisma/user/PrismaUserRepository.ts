@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { IUser } from 'src/models/IUser';
 import { UserRepository } from 'src/repositories/abstracts/UserRepository';
 import { PrismaService } from '../prisma-client.service';
+import { IReturnUser } from 'src/interfaces/IReturnUser';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -21,5 +22,11 @@ export class PrismaUserRepository implements UserRepository {
         });
 
         return findById;
+    }
+
+    async findAll(): Promise<IReturnUser[]> {
+        const users = await this.prismaService.user.findMany();
+
+        return users;
     }
 }

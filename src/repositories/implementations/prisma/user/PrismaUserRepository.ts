@@ -3,6 +3,7 @@ import { IUser } from 'src/models/IUser';
 import { UserRepository } from 'src/repositories/abstracts/UserRepository';
 import { PrismaService } from '../prisma-client.service';
 import { IReturnUser } from 'src/interfaces/IReturnUser';
+import { DataUpdateAUserDTO } from 'src/modules/user/use-cases/update-a-user/dtos/DataUpdateAUserDTO';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -36,5 +37,17 @@ export class PrismaUserRepository implements UserRepository {
         });
 
         return deleteByEmail;
+    }
+
+    async updateByEmail(
+        updateToEmail: string,
+        { firstName, lastName, email, password }: DataUpdateAUserDTO,
+    ): Promise<IUser> {
+        const updatedUser = await this.prismaService.user.update({
+            where: { email: updateToEmail },
+            data: { firstName, lastName, email, password },
+        });
+
+        return updatedUser;
     }
 }

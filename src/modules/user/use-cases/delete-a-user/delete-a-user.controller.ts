@@ -7,7 +7,7 @@ import { DeleteUserDTO } from './dtos/DeleteUserDTO';
 export class DeleteAUserController implements IController {
     constructor(private readonly deleteAUserService: DeleteAUserService) {}
 
-    @Delete('user/delete')
+    @Delete('user')
     async handle(@Body() body: DeleteUserDTO): Promise<object> {
         const deletedUser = await this.deleteAUserService.execute(body);
 

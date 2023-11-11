@@ -1,4 +1,16 @@
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Delete } from '@nestjs/common';
+import { IController } from 'src/interfaces/IController';
+import { DeleteAUserService } from './delete-a-user.service';
+import { DeleteUserDTO } from './dtos/DeleteUserDTO';
 
-@Controller('delete-a-user')
-export class DeleteAUserController {}
+@Controller()
+export class DeleteAUserController implements IController {
+    constructor(private readonly deleteAUserService: DeleteAUserService) {}
+
+    @Delete('user/delete')
+    async handle(@Body() body: DeleteUserDTO): Promise<object> {
+        const deletedUser = await this.deleteAUserService.execute(body);
+
+        return deletedUser;
+    }
+}

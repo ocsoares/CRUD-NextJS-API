@@ -6,6 +6,8 @@ import { HttpModule } from '@nestjs/axios';
 import { rateLimiterMiddleware } from '../auth/middlewares/rate-limiter.middleware';
 import { FindAllUsersController } from './use-cases/find-all-users/find-all-users.controller';
 import { FindAllUsersService } from './use-cases/find-all-users/find-all-users.service';
+import { DeleteAUserService } from './use-cases/delete-a-user/delete-a-user.service';
+import { DeleteAUserController } from './use-cases/delete-a-user/delete-a-user.controller';
 
 @Module({
     imports: [
@@ -17,8 +19,8 @@ import { FindAllUsersService } from './use-cases/find-all-users/find-all-users.s
         }),
         HttpModule,
     ],
-    controllers: [GenerateUserGithubTokenController, FindAllUsersController],
-    providers: [GenerateUserGithubTokenService, FindAllUsersService],
+    controllers: [GenerateUserGithubTokenController, FindAllUsersController, DeleteAUserController],
+    providers: [GenerateUserGithubTokenService, FindAllUsersService, DeleteAUserService],
 })
 export class UserModule implements NestModule {
     // I used this because NestJS Throttler Module doesn't work !!!

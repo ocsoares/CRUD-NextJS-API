@@ -6,6 +6,8 @@ import { FindAllUsersController } from './use-cases/find-all-users/find-all-user
 import { FindAllUsersService } from './use-cases/find-all-users/find-all-users.service';
 import { DeleteAUserService } from './use-cases/delete-a-user/delete-a-user.service';
 import { DeleteAUserController } from './use-cases/delete-a-user/delete-a-user.controller';
+import { UpdateAUserController } from './use-cases/update-a-user/update-a-user.controller';
+import { UpdateAUserService } from './use-cases/update-a-user/update-a-user.service';
 
 @Module({
     imports: [
@@ -17,8 +19,8 @@ import { DeleteAUserController } from './use-cases/delete-a-user/delete-a-user.c
         }),
         HttpModule,
     ],
-    controllers: [FindAllUsersController, DeleteAUserController],
-    providers: [FindAllUsersService, DeleteAUserService],
+    controllers: [FindAllUsersController, DeleteAUserController, UpdateAUserController],
+    providers: [FindAllUsersService, DeleteAUserService, UpdateAUserService],
 })
 export class UserModule implements NestModule {
     // I used this because NestJS Throttler Module doesn't work !!!

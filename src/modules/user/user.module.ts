@@ -1,7 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { GenerateUserGithubTokenService } from './use-cases/generate-user-github-token/generate-user-github-token.service';
-import { GenerateUserGithubTokenController } from './use-cases/generate-user-github-token/generate-user-github-token.controller';
 import { HttpModule } from '@nestjs/axios';
 import { rateLimiterMiddleware } from '../auth/middlewares/rate-limiter.middleware';
 import { FindAllUsersController } from './use-cases/find-all-users/find-all-users.controller';
@@ -19,8 +17,8 @@ import { DeleteAUserController } from './use-cases/delete-a-user/delete-a-user.c
         }),
         HttpModule,
     ],
-    controllers: [GenerateUserGithubTokenController, FindAllUsersController, DeleteAUserController],
-    providers: [GenerateUserGithubTokenService, FindAllUsersService, DeleteAUserService],
+    controllers: [FindAllUsersController, DeleteAUserController],
+    providers: [FindAllUsersService, DeleteAUserService],
 })
 export class UserModule implements NestModule {
     // I used this because NestJS Throttler Module doesn't work !!!

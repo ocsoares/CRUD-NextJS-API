@@ -30,7 +30,7 @@ export class PrismaUserRepository implements UserRepository {
         return users;
     }
 
-    async deleteByEmail(email: string): Promise<any> {
+    async deleteByEmail(email: string): Promise<IUser> {
         const deleteByEmail = await this.prismaService.user.delete({
             where: { email },
         });

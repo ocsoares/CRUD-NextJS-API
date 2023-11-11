@@ -89,7 +89,7 @@ async function bootstrap() {
 
     app.enableCors({
         origin: process.env.FRONTEND_URL,
-        methods: ['GET', 'POST'],
+        methods: ['GET', 'POST', 'DELETE'],
     });
 
     await app.listen(PORT);

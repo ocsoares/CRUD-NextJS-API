@@ -44,11 +44,13 @@ export class UpdateAUserService implements IService {
                 throw new UserNotFoundException();
             }
 
-            const userAlreadyExistsByEmail =
-                await this.userRepository.findByEmail(email);
+            if (email) {
+                const userAlreadyExistsByEmail =
+                    await this.userRepository.findByEmail(email);
 
-            if (userAlreadyExistsByEmail) {
-                throw new UserAlreadyExistsByEmailException();
+                if (userAlreadyExistsByEmail && email !== updateToEmail) {
+                    throw new UserAlreadyExistsByEmailException();
+                }
             }
 
             const { password: userPassword } = user;

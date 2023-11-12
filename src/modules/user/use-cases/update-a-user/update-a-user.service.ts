@@ -7,6 +7,7 @@ import { InvalidUpdateUserBodyException } from 'src/exceptions/user-exceptions/i
 import { MissingPasswordFieldsException } from 'src/exceptions/user-exceptions/missing-password-fields.exception';
 import { compare, hash } from 'bcrypt';
 import { UserPasswordDoNotMatchException } from 'src/exceptions/user-exceptions/user-password-do-not-match.exception';
+import { UserAlreadyExistsByEmailException } from 'src/exceptions/user-exceptions/user-already-exists-by-email.exception';
 
 @Injectable()
 export class UpdateAUserService implements IService {
@@ -43,6 +44,13 @@ export class UpdateAUserService implements IService {
                 throw new UserNotFoundException();
             }
 
+            const userAlreadyExistsByEmail =
+                await this.userRepository.findByEmail(email);
+
+            if (userAlreadyExistsByEmail) {
+                throw new UserAlreadyExistsByEmailException();
+            }
+
             const { password: userPassword } = user;
 
             if (password) {
@@ -71,7 +79,8 @@ export class UpdateAUserService implements IService {
                 error instanceof UserNotFoundException ||
                 error instanceof InvalidUpdateUserBodyException ||
                 error instanceof MissingPasswordFieldsException ||
-                error instanceof UserPasswordDoNotMatchException
+                error instanceof UserPasswordDoNotMatchException ||
+                error instanceof UserAlreadyExistsByEmailException
             ) {
                 throw error;
             }

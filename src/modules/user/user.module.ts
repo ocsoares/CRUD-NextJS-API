@@ -10,8 +10,8 @@ import { UpdateAUserController } from './use-cases/update-a-user/update-a-user.c
 import { UpdateAUserService } from './use-cases/update-a-user/update-a-user.service';
 import { SearchUsersService } from './use-cases/search-users/search-users.service';
 import { SearchUsersController } from './use-cases/search-users/search-users.controller';
-import { SearchUsersInOrderController } from './use-cases/search-users-in-order/search-users-in-order.controller';
-import { SearchUsersInOrderService } from './use-cases/search-users-in-order/search-users-in-order.service';
+import { SearchUsersByOrderService } from './use-cases/search-users-by-order/search-users-by-order.service';
+import { SearchUsersByOrderController } from './use-cases/search-users-by-order/search-users-by-order.controller';
 
 @Module({
     imports: [
@@ -23,8 +23,20 @@ import { SearchUsersInOrderService } from './use-cases/search-users-in-order/sea
         }),
         HttpModule,
     ],
-    controllers: [FindAllUsersController, DeleteAUserController, UpdateAUserController, SearchUsersController, SearchUsersInOrderController],
-    providers: [FindAllUsersService, DeleteAUserService, UpdateAUserService, SearchUsersService, SearchUsersInOrderService],
+    controllers: [
+        FindAllUsersController,
+        DeleteAUserController,
+        UpdateAUserController,
+        SearchUsersController,
+        SearchUsersByOrderController,
+    ],
+    providers: [
+        FindAllUsersService,
+        DeleteAUserService,
+        UpdateAUserService,
+        SearchUsersService,
+        SearchUsersByOrderService,
+    ],
 })
 export class UserModule implements NestModule {
     // I used this because NestJS Throttler Module doesn't work !!!

@@ -4,6 +4,7 @@ import { UserRepository } from 'src/repositories/abstracts/UserRepository';
 import { PrismaService } from '../prisma-client.service';
 import { IReturnUser } from 'src/interfaces/IReturnUser';
 import { DataUpdateAUserDTO } from 'src/modules/user/use-cases/update-a-user/dtos/DataUpdateAUserDTO';
+import { SearchUsersByOrderDTO } from 'src/modules/user/use-cases/search-users-by-order/dtos/SearchUsersByOrderDTO';
 
 @Injectable()
 export class PrismaUserRepository implements UserRepository {
@@ -72,5 +73,31 @@ export class PrismaUserRepository implements UserRepository {
         });
 
         return usersFound;
+    }
+
+    async searchUsersByOrder({
+        order,
+    }: SearchUsersByOrderDTO): Promise<IReturnUser[]> {
+        if (order === 'asc') {
+            const searchUsersByAscOrder =
+                await this.prismaService.user.findMany({
+                    orderBy: {
+                        createdAt: 'asc',
+                    },
+                });
+
+            return searchUsersByAscOrder;
+        }
+
+        if (order === 'desc') {
+            const searchUsersByDescOrder =
+                await this.prismaService.user.findMany({
+                    orderBy: {
+                        createdAt: 'desc',
+                    },
+                });
+
+            return searchUsersByDescOrder;
+        }
     }
 }

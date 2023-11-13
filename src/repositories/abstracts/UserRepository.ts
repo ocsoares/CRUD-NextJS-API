@@ -11,4 +11,5 @@ export abstract class UserRepository {
         updateToEmail: string,
         { firstName, lastName, email, password }: DataUpdateAUserDTO,
     ): Promise<IUser>;
+    abstract searchUsers(partialName: string): Promise<IReturnUser[]>;
 }

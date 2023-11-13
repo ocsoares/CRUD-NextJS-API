@@ -50,4 +50,21 @@ export class PrismaUserRepository implements UserRepository {
 
         return updatedUser;
     }
+
+    async searchUsers(partialName: string): Promise<IReturnUser[]> {
+        const usersFound = await this.prismaService.user.findMany({
+            where: {
+                OR: [
+                    {
+                        firstName: { contains: partialName },
+                    },
+                    {
+                        lastName: { contains: partialName },
+                    },
+                ],
+            },
+        });
+
+        return usersFound;
+    }
 }

@@ -56,10 +56,16 @@ export class PrismaUserRepository implements UserRepository {
             where: {
                 OR: [
                     {
-                        firstName: { contains: partialName },
+                        firstName: {
+                            contains: partialName,
+                            mode: 'insensitive',
+                        },
                     },
                     {
-                        lastName: { contains: partialName },
+                        lastName: {
+                            contains: partialName,
+                            mode: 'insensitive',
+                        },
                     },
                 ],
             },

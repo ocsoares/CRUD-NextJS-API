@@ -81,7 +81,7 @@ async function bootstrap() {
         customfavIcon: swaggerFavIcon,
     });
 
-    const server = app.getHttpAdapter();
+    const server = app.getHttpAdapter().getInstance();
 
     server.get('/', (req: Request, res: Response) => {
         res.redirect('/docs');

@@ -3,6 +3,7 @@ import { IReturnUser } from 'src/interfaces/IReturnUser';
 import { IService } from 'src/interfaces/IService';
 import { UserRepository } from 'src/repositories/abstracts/UserRepository';
 import { SearchUsersByOrderDTO } from './dtos/SearchUsersByOrderDTO';
+import { UserPresenter } from 'src/presenters/user.presenter';
 
 @Injectable()
 export class SearchUsersByOrderService implements IService {
@@ -12,16 +13,8 @@ export class SearchUsersByOrderService implements IService {
         const searchUsersByOrder =
             await this.userRepository.searchUsersByOrder(order);
 
-        const returnSearchUsersByOrder = searchUsersByOrder.map(
-            ({ firstName, lastName, email, createdAt, updatedAt }) =>
-                <IReturnUser>{
-                    firstName,
-                    lastName,
-                    email,
-                    createdAt,
-                    updatedAt,
-                },
-        );
+        const returnSearchUsersByOrder =
+            UserPresenter.toJSONOutputArray(searchUsersByOrder);
 
         return returnSearchUsersByOrder;
     }

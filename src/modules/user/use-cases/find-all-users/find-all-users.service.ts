@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { IReturnUser } from 'src/interfaces/IReturnUser';
 import { IService } from 'src/interfaces/IService';
+import { UserPresenter } from 'src/presenters/user.presenter';
 import { UserRepository } from 'src/repositories/abstracts/UserRepository';
 
 @Injectable()
@@ -11,16 +12,7 @@ export class FindAllUsersService implements IService {
         try {
             const allUsers = await this.userRepository.findAll();
 
-            const returnAllUsers = allUsers.map(
-                ({ firstName, lastName, email, createdAt, updatedAt }) =>
-                    <IReturnUser>{
-                        firstName,
-                        lastName,
-                        email,
-                        createdAt,
-                        updatedAt,
-                    },
-            );
+            const returnAllUsers = UserPresenter.toJSONOutputArray(allUsers);
 
             return returnAllUsers;
         } catch (error) {

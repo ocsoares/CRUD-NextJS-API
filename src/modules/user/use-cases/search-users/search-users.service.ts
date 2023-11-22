@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { IService } from 'src/interfaces/IService';
 import { UserRepository } from 'src/repositories/abstracts/UserRepository';
 import { IReturnUser } from 'src/interfaces/IReturnUser';
+import { UserPresenter } from 'src/presenters/user.presenter';
 
 @Injectable()
 export class SearchUsersService implements IService {
@@ -12,16 +13,8 @@ export class SearchUsersService implements IService {
             const usersFound =
                 await this.userRepository.searchUsers(partialName);
 
-            const returnUsersFound = usersFound.map(
-                ({ firstName, lastName, email, createdAt, updatedAt }) =>
-                    <IReturnUser>{
-                        firstName,
-                        lastName,
-                        email,
-                        createdAt,
-                        updatedAt,
-                    },
-            );
+            const returnUsersFound =
+                UserPresenter.toJSONOutputArray(usersFound);
 
             return returnUsersFound;
         } catch (error) {

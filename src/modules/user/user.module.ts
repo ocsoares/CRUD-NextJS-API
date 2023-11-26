@@ -17,8 +17,10 @@ import { SearchUsersByOrderController } from './use-cases/search-users-by-order/
     imports: [
         JwtModule.registerAsync({
             useFactory: async () => ({
-                secret: process.env.JWT_SECRET,
-                signOptions: { expiresIn: process.env.JWT_EXPIRATION },
+                signOptions: {
+                    algorithm: 'RS256',
+                },
+                publicKey: Buffer.from(process.env.JWT_PUBLIC_KEY, 'base64'),
             }),
         }),
         HttpModule,
